@@ -1,17 +1,20 @@
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
-from Controlers.DatabaseControler import Base
+from Models.BaseModel import BaseModel
 
 
-class Year(Base):
-    __tablename__ = 'year'
+class Year(BaseModel.Base):
+    __tablename__ = 'years'
 
     id = Column(Integer, primary_key=True)
     year = Column(Integer)
     territory_id = Column(Integer, ForeignKey('territory.id'))
-    attendants = relationship('Attendants', backref="year")
-    people_that_passed = relationship('PeopleThatPassed', backref="year")
+    attendants_id = Column(Integer, ForeignKey('attendants.id'))
+    people_that_passed_id = Column(Integer, ForeignKey('attendants.id'))
+    attendants = relationship('Attendants', foreign_keys=[attendants_id], backref="attendants_years")
+    people_that_passed = relationship('Attendants', foreign_keys=[people_that_passed_id],
+                                      backref="people_that_passed_years")
 
     def __init__(self, year):
         self.year = year

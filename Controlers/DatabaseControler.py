@@ -1,8 +1,7 @@
 import requests
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-Base = declarative_base()
+from Models.BaseModel import BaseModel
 
 
 def decode_polish_letters(text):
@@ -17,7 +16,7 @@ def decode_polish_letters(text):
 
 class DatabaseController:
     def __init__(self, engine):
-        Base.metadata.create_all(engine)
+        BaseModel.Base.metadata.create_all(engine)
         Session = sessionmaker(bind=engine)
         self.session = Session()
 
@@ -28,5 +27,9 @@ class DatabaseController:
         for line in data:
             lines.append(line.decode(errors='backslashreplace').split(';'))
         lines = lines[1:]
-        from Models.Attendants import Attendants
+        from Models.Territory import Territory
+        territory = Territory('Polska')
         pass
+        for line in lines:
+            territory = decode_polish_letters(line[0])
+            attendants_type = decode_polish_letters(line[1])
