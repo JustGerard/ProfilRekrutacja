@@ -9,7 +9,7 @@ class Attendants(BaseModel.Base):
     id = Column(Integer, primary_key=True)
     men = Column(Integer)
     women = Column(Integer)
-    year_id = Column(Integer, ForeignKey('years.id'))
+    year_id = Column(Integer, ForeignKey('years.id', use_alter=True))
 
     def __init__(self, men, women):
         self.men = men
