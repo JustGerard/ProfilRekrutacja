@@ -8,7 +8,7 @@ class Year(BaseModel.Base):
     __tablename__ = 'years'
 
     id = Column(Integer, primary_key=True)
-    year = Column(Integer)
+    year_number = Column(Integer)
     territory_id = Column(Integer, ForeignKey('territory.id', use_alter=True))
     attendants_id = Column(Integer, ForeignKey('attendants.id', use_alter=True))
     people_that_passed_id = Column(Integer, ForeignKey('attendants.id', use_alter=True))
@@ -17,7 +17,7 @@ class Year(BaseModel.Base):
                                       backref="people_that_passed_years")
 
     def __init__(self, year):
-        self.year = year
+        self.year_number = year
 
     def __repr__(self):
-        return "<Year('%s')>" % self.year
+        return "<Year('%s')>" % self.year_number

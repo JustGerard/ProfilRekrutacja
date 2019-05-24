@@ -1,9 +1,6 @@
 import requests
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
 from Models.Attendants import Attendants
-from Models.BaseModel import BaseModel
 from Models.Territory import Territory
 from Models.Year import Year
 
@@ -94,49 +91,3 @@ def get_year_object(year, year_lines):
         else:
             year_object.people_that_passed = attendants
     return year_object
-
-
-class DatabaseController:
-    def __init__(self):
-        self.engine = create_engine('sqlite:///database.db')
-        BaseModel.Base.metadata.create_all(self.engine)
-        Session = sessionmaker(bind=self.engine)
-        self.session = Session()
-
-    def update_data(self, csv_link):
-        lines = download_data(csv_link)
-        territories = parse_lines_to_territories(lines)
-        self.save_data(territories)
-
-    def save_data(self, objects):
-        self.delete_data()
-        self.session.add_all(objects)
-        self.session.commit()
-
-    def get_all_territories(self):
-        return self.session.query(Territory).all()
-
-    def get_all_territories_names(self):
-        return self.session.query(Territory.name).all()
-
-    def get_territory(self, territory):
-        return self.session.query(Territory).filter_by(name=territory)
-
-    def delete_data(self):
-        BaseModel.Base.metadata.drop_all(bind=self.engine)
-        BaseModel.Base.metadata.create_all(bind=self.engine)
-
-    def calculate_average_of_territory(self, territory_name, to_year):
-        query = self.get_territory(territory_name)
-        territory = query.one()
-        values = []
-        for year in territory.years:
-            if year.year <= to_year:
-                men = year.attendants.men
-                women = year.attendants.women
-                both = men + women
-                values.append(both)
-        sum = 0
-        for value in values:
-            sum += value
-        return sum / len(values)
