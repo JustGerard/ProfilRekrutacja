@@ -76,6 +76,9 @@ def calculate_average_of_territory(territory_name, to_year, active_filter):
     if territory is None:
         raise NoResultFound
     values = []
+    year_numbers = [year.year_number for year in territory.years]
+    if to_year not in year_numbers:
+        raise InvalidItemSelectedException
     for year in territory.years:
         if year.year_number <= to_year:
             men = year.attendants.men
