@@ -37,7 +37,7 @@ class DatabaseController:
         return self.session.query(Territory.name).all()
 
     def get_territory(self, territory):
-        return self.session.query(Territory).filter_by(name=territory)
+        return self.session.query(Territory).filter_by(name=territory).one()
 
     def delete_data(self):
         BaseModel.Base.metadata.drop_all(bind=self.engine)

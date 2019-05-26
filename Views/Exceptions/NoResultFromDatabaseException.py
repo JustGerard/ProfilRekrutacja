@@ -1,0 +1,2 @@
+class NoResultFromDatabaseException:
+    pass

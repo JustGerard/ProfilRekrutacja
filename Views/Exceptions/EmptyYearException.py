@@ -1,0 +1,2 @@
+class EmptyYearException(Exception):
+    pass

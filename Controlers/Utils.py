@@ -5,29 +5,19 @@ from Models.Territory import Territory
 from Models.Year import Year
 
 
-def decode_polish_letters(text):
-    letters = {r"\xa5": "A", r"\xc6": "C", r"\xca": "E", r"\xa3": "L", r"\xd1": "N", r"\xd3": "O",
-               r"\x8c": "S", r"\x8f": "Z", r"\xaf": "Z", r"\xb9": "a", r"\xe6": "c", r"\xea": "e",
-               r"\xb3": "l", r"\xf1": "n", r"\xf3": "o", r"\x9c": "s", r"\x9f": "z", r"\xbf": "z"}
-    for letter in letters.keys():
-        if letter in text:
-            text = text.replace(letter, letters[letter])
-    return text
-
-
 def download_data(link):
     response = requests.get(link)
     data = response.content.splitlines()[1:]
     lines = []
     for line in data:
-        lines.append(line.decode(errors='backslashreplace').split(';'))
+        lines.append(str(line, 'windows-1250').split(';'))
     return lines
 
 
 def parse_lines_to_territories(lines):
     territory_lines = {}
     for line in lines:
-        territory_name = decode_polish_letters(line[0])
+        territory_name = line[0]
         if territory_name not in territory_lines.keys():
             tab = [line[1:]]
             territory_lines[territory_name] = tab
@@ -68,7 +58,7 @@ def get_year_object(year, year_lines):
     year_object = Year(year)
     attendants_lines = {}
     for line in year_lines[year]:
-        attendants_type = decode_polish_letters(line[0])
+        attendants_type = line[0]
         if attendants_type not in attendants_lines.keys():
             tab = [line[1:]]
             attendants_lines[attendants_type] = tab
@@ -80,13 +70,13 @@ def get_year_object(year, year_lines):
         women = 0
         men = 0
         for line in attendants_lines[attendants_type]:
-            gender = decode_polish_letters(line[0])
-            if gender == "mezczyzni":
+            gender = line[0]
+            if gender == "mężczyźni":
                 men = int(line[1])
             else:
                 women = int(line[1])
         attendants = Attendants(men, women)
-        if attendants_type == 'przystapilo':
+        if attendants_type == 'przystąpiło':
             year_object.attendants = attendants
         else:
             year_object.people_that_passed = attendants

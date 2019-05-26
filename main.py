@@ -1,3 +1,4 @@
+from Controlers.DatabaseController import DatabaseController
 from Views.AverageView import average_view
 from Views.BestTerritoryView import best_territory_view
 from Views.PassingPercentageView import passing_percentage_view
@@ -5,6 +6,8 @@ from Views.RegressionView import regression_view
 from Views.TerritoriesComparisonView import territories_comparison_view
 
 if __name__ == "__main__":
+    database_controller = DatabaseController()
+    temp = database_controller.get_territory("Piersi")
     available_filters = ["men", "women", "both"]
     active_filter = "both"
     functions = [average_view, passing_percentage_view, best_territory_view, regression_view,

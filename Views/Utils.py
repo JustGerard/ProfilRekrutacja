@@ -1,4 +1,9 @@
+from sqlalchemy.orm.exc import NoResultFound
+
 from Controlers.DatabaseController import DatabaseController
+from Views.Exceptions.EmptyTerritoryException import EmptyTerritoryException
+from Views.Exceptions.EmptyYearException import EmptyYearException
+from Views.Exceptions.InvalidItemSelectedException import InvalidItemSelectedException
 
 database_controller = DatabaseController()
 
@@ -11,11 +16,12 @@ def get_choice(item_list):
         try:
             choice = int(choice)
             if choice not in range(len(item_list)):
-                raise ValueError
+                raise InvalidItemSelectedException
             else:
                 return item_list[choice]
-        except ValueError:
+        except InvalidItemSelectedException:
             print("Please select valid item")
+            return get_choice(item_list)
 
 
 def select_territory():
@@ -33,6 +39,8 @@ def select_territory():
 
 
 def select_year(territory):
+    if len(territory.years) == 0:
+        raise EmptyTerritoryException("Territory %s has no years in the database" % territory.name)
     while True:
         print("Select year or go back('b'):")
         years = territory.years
@@ -47,6 +55,8 @@ def select_year(territory):
 
 
 def get_percentage_of_people_that_passed(year, active_filter):
+    if year.people_that_passed is None or year.attendants is None:
+        raise EmptyYearException("There are no attendants in year %d" % year.year_number)
     men_passed = year.people_that_passed.men
     women_passed = year.people_that_passed.women
     men_attended = year.attendants.men
@@ -62,8 +72,9 @@ def get_percentage_of_people_that_passed(year, active_filter):
 
 
 def calculate_average_of_territory(territory_name, to_year, active_filter):
-    query = database_controller.get_territory(territory_name)
-    territory = query.one()
+    territory = database_controller.get_territory(territory_name)
+    if territory is None:
+        raise NoResultFound
     values = []
     for year in territory.years:
         if year.year_number <= to_year:

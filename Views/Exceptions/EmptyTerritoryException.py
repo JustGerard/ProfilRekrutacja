@@ -1,0 +1,2 @@
+class EmptyTerritoryException(Exception):
+    pass
