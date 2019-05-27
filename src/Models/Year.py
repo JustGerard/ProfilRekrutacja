@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
-from Models.BaseModel import BaseModel
+from src.Models.BaseModel import BaseModel
 
 
 class Year(BaseModel.Base):

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 
-from Models.BaseModel import BaseModel
+from src.Models.BaseModel import BaseModel
 
 
 class Territory(BaseModel.Base):

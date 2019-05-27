@@ -1,10 +1,10 @@
 import sys
 
-from Views.AverageView import average_view
-from Views.BestTerritoryView import best_territory_view
-from Views.PassingPercentageView import passing_percentage_view
-from Views.RegressionView import regression_view
-from Views.TerritoriesComparisonView import territories_comparison_view
+from src.Views.AverageView import average_view
+from src.Views.BestTerritoryView import best_territory_view
+from src.Views.PassingPercentageView import passing_percentage_view
+from src.Views.RegressionView import regression_view
+from src.Views.TerritoriesComparisonView import territories_comparison_view
 
 
 def print_error():

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, ForeignKey
 
-from Models.BaseModel import BaseModel
+from src.Models.BaseModel import BaseModel
 
 
 class Attendants(BaseModel.Base):

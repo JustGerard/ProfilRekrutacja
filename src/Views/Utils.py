@@ -1,9 +1,9 @@
 from sqlalchemy.orm.exc import NoResultFound
 
-from Controlers.DatabaseController import DatabaseController
-from Views.Exceptions.EmptyTerritoryException import EmptyTerritoryException
-from Views.Exceptions.EmptyYearException import EmptyYearException
-from Views.Exceptions.InvalidItemSelectedException import InvalidItemSelectedException
+from src.Controlers.DatabaseController import DatabaseController
+from src.Views.Exceptions.EmptyTerritoryException import EmptyTerritoryException
+from src.Views.Exceptions.EmptyYearException import EmptyYearException
+from src.Views.Exceptions.InvalidItemSelectedException import InvalidItemSelectedException
 
 database_controller = DatabaseController()
 
@@ -28,6 +28,8 @@ def select_territory():
     while True:
         print("Select territory or go back('b'):")
         territories = database_controller.get_all_territories()
+        if territories is None:
+            raise NoResultFound
         territories_names = [territory.name for territory in territories]
         for i in range(len(territories_names)):
             print("\t%d %s" % (i, territories_names[i]))
@@ -56,7 +58,7 @@ def select_year(territory):
 
 def get_percentage_of_people_that_passed(year, active_filter):
     if year.people_that_passed is None or year.attendants is None:
-        raise EmptyYearException("There are no attendants in year %d" % year.year_number)
+        raise EmptyYearException
     men_passed = year.people_that_passed.men
     women_passed = year.people_that_passed.women
     men_attended = year.attendants.men
@@ -97,4 +99,7 @@ def calculate_average_of_territory(territory_name, to_year, active_filter):
 
 
 def get_all_territories():
-    return database_controller.get_all_territories()
+    territories = database_controller.get_all_territories()
+    if territories is None:
+        raise NoResultFound
+    return territories

@@ -4,9 +4,9 @@ import requests
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from Controlers.Utils import download_data, parse_lines_to_territories
-from Models.BaseModel import BaseModel
-from Models.Territory import Territory
+from src.Controlers.Utils import download_data, parse_lines_to_territories
+from src.Models.BaseModel import BaseModel
+from src.Models.Territory import Territory
 
 
 class DatabaseController:

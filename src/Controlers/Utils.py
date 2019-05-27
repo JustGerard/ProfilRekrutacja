@@ -1,8 +1,8 @@
 import requests
 
-from Models.Attendants import Attendants
-from Models.Territory import Territory
-from Models.Year import Year
+from src.Models.Attendants import Attendants
+from src.Models.Territory import Territory
+from src.Models.Year import Year
 
 
 def download_data(link):
