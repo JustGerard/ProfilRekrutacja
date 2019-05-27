@@ -30,7 +30,9 @@ def best_territory_view(active_filter):
             best_territory, best_percentage = get_best_territory(territories, year, active_filter)
             print("Best territory in year %d is %s with score: %f%%" %
                   (year.year_number, best_territory.name, best_percentage * 100))
-    except EmptyListException or NoResultFound:
+    except EmptyListException:
+        print("There are no territories in database")
+    except NoResultFound:
         print("There are no territories in database")
     except InvalidItemSelectedException:
         print("Selected year is not in territory")

@@ -22,6 +22,9 @@ def get_choice(item_list):
         except InvalidItemSelectedException:
             print("Please select valid item")
             return get_choice(item_list)
+        except ValueError:
+            print("Please select valid item")
+            return get_choice(item_list)
 
 
 def select_territory():
