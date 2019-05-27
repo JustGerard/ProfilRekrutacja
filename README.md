@@ -11,7 +11,7 @@ pip install -r requirements.txt
 ```
 
 ## Dostępne argumenty
-**-h** - Pomoc wypisująca możliwe argumenty.
+**-help** - Pomoc wypisująca możliwe argumenty.
 
 **average** - Średnia liczba osób która przystąpiła do egzaminu dla daneg województwa na przestrzeni lat, do podanego roku włącznie.
 
@@ -23,7 +23,7 @@ pip install -r requirements.txt
 
 **comparison** - Porównanie dwóch województw.
 
-**-filter** - Zastosowaniu filtru (dostępne filtry to: men, women, both)
+**-filter [argument]** - Zastosowaniu filtru (dostępne filtry to: men, women, both)
 
 ## Przykład użycia
 
